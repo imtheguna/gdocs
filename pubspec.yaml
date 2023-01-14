@@ -21,7 +21,8 @@ publish_to: 'none' # Remove this line if you wish to publish to pub.dev
 version: 1.0.0+1
 
 environment:
-  sdk: '>=2.18.5 <3.0.0'
+  sdk: ">=2.18.5 <3.0.0"
+  flutter: ">=1.17.0"
 
 # Dependencies specify other packages that your package needs in order to work.
 # To automatically upgrade your package dependencies to the latest versions
@@ -48,6 +49,9 @@ dependencies:
   socket_io_client: ^1.0.2
   url_launcher: ^6.1.7
   url_strategy: ^0.2.0
+  chat_gpt_sdk:
+    git:
+      url: https://github.com/imtheguna/Flutter-ChatGPT.git
 
 dev_dependencies:
   flutter_lints: ^2.0.0

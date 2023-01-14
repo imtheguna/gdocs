@@ -2,10 +2,14 @@ import 'dart:async';
 import 'dart:io';
 import 'dart:convert';
 import 'dart:html' as html;
+import 'package:chat_gpt_sdk/chat_gpt_sdk.dart';
 import 'package:docs/controller/comm.dart';
+import 'package:docs/models/chatgptmodel.dart';
+import 'package:docs/models/constants.dart';
 import 'package:docs/models/doc.model.dart';
 import 'package:docs/models/error.model.dart';
 import 'package:docs/repository/auth_repository.dart';
+import 'package:docs/repository/chat_repo.dart';
 import 'package:docs/repository/doc_repo.dart';
 import 'package:docs/repository/sharedrepo.dart';
 import 'package:docs/repository/socket_repo.dart';
@@ -27,6 +31,7 @@ class DocumentPage extends ConsumerStatefulWidget {
 class _DocumentPageState extends ConsumerState<DocumentPage> {
   quill.QuillController? _controller;
   final FocusNode editorFocusNode = FocusNode();
+
   ErrorModel? data;
   ErrorModel? errorModel;
   SocketRepo socketRepo = SocketRepo();
@@ -41,6 +46,7 @@ class _DocumentPageState extends ConsumerState<DocumentPage> {
   @override
   void initState() {
     super.initState();
+
     socketRepo.joinRoom(widget.id);
     fetchDcoData();
     socketRepo.changeListener((data) => {
@@ -140,6 +146,15 @@ class _DocumentPageState extends ConsumerState<DocumentPage> {
       );
     }
     return Scaffold(
+        floatingActionButton: FloatingActionButton(
+            child: const Icon(Icons.question_answer),
+            onPressed: () async {
+              ChatRepo().modalBottomSheetMenu(
+                context: context,
+                width: width,
+              );
+              //_sendMessage();
+            }),
         appBar: AppBar(
           automaticallyImplyLeading: false,
           backgroundColor: Colors.white,
